@@ -281,7 +281,7 @@
 		"Station Clusters": ggrc30_stations,
 		"Station Cluster Convex Hulls": ggrc30_convex_hull,
 	}
-	let layerControl = L.control.layers(baseMaps, overlay, {position: "bottomright", collapsed: false}).addTo(map);
+	let layerControl = L.control.layers(baseMaps, overlay, {position: "topleft", collapsed: true}).addTo(map);
 	layerControl.addOverlay(ggrc32_stations, "Relative Seasonal Variation in Cycling Speeds");
 	layerControl.addOverlay(ggrc32_routes, "Simulated Cycling Routes");
 
