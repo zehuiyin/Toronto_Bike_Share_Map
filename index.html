@@ -41,6 +41,12 @@
 		div.legend.leaflet-control br {
 			clear: both;
 		}
+	    	.data_source {
+			padding: 6px 8px;
+			background-color: rgba(255,255,255,0.8);
+			box-shadow: 0 0 15px rgba(0,0,0,0.2);
+			border-radius: 5px;
+		}
     </style>
     <!---disables unwanted scaling of the page when on mobile devices--->
     <meta name="viewport" content="width=device-width, 
@@ -293,6 +299,17 @@
 	};
 	description.addTo(map);
 
+	// add data source
+	let data_source = L.control({position: "bottomleft"});
+	data_source.onAdd = function() {
+		let div = L.DomUtil.create("div", "data_source");
+		div.innerHTML = 
+			'Data Source: City of Toronto Open Data, Toronto Parking Authority'
+		return div;
+	};
+	data_source.addTo(map);
+	
+	// add a legend
 	let legend = L.control({position: "bottomright"});
 	function create_legend() {
 		legend.onAdd = function() {
@@ -347,6 +364,9 @@
 		return div;
 		};
 		legend.addTo(map);
+		if (!map.hasLayer(ggrc30_stations) && !map.hasLayer(ggrc32_stations) && !map.hasLayer(ggrc32_routes)) {
+			map.removeControl(legend);
+		}
 	}
 	map.on("layeradd", create_legend)
 	map.on("layerremove", create_legend)
