@@ -293,6 +293,17 @@
 	};
 	description.addTo(map);
 
+	// add data source
+	let data_source = L.control({position: "bottomleft"});
+	data_source.onAdd = function() {
+		let div = L.DomUtil.create("div", "data_source");
+		div.innerHTML = 
+			'Data Source: City of Toronto Open Data, Toronto Parking Authority'
+		return div;
+	};
+	data_source.addTo(map);
+	
+	// add a legend
 	let legend = L.control({position: "bottomright"});
 	function create_legend() {
 		legend.onAdd = function() {
