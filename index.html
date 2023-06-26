@@ -14,11 +14,18 @@
             width: 100%;
         }
     </style>
+    <!---disables unwanted scaling of the page when on mobile devices--->
+    <meta name="viewport" content="width=device-width, 
+    initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 <body>
     <div id="map"></div>
     <script>
         let map = L.map("map", {center: [31.262218, 34.801472], zoom: 17});
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", 
+            {attribution: "&copy; OpenStreetMap"}
+        ).addTo(map);
     </script>
 </body>
 </html>
