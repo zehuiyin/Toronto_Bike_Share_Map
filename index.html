@@ -13,6 +13,17 @@
             height: 100%;
             width: 100%;
         }
+	.description {
+    		width: 250px;
+    		font-size: 16px;
+    		color: #333333;
+    		font-family: "Open Sans", Helvetica, sans-serif;
+    		padding: 10px 14px;
+    		background-color: rgba(245,245,220,0.8);
+    		box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    		border-radius: 5px;
+    		border: 1px solid grey;
+	}
     </style>
     <!---disables unwanted scaling of the page when on mobile devices--->
     <meta name="viewport" content="width=device-width, 
@@ -34,6 +45,15 @@
   		[43.6629, -79.3957], 
   		{radius: 50, color: "black", fillColor: "red"}
 	).addTo(map);
+
+	let description = L.control({position: "bottomleft"});
+	description.onAdd = function() {
+    		let div = L.DomUtil.create("div", "description");
+    		div.innerHTML = 
+        		'<p><b>Toronto Bike Share Map</b></p><hr>';
+		description.addTo(map);
+    		return div;
+	};
     </script>
 </body>
 </html>
