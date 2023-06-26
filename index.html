@@ -27,6 +27,9 @@
 		subdomains: 'abcd',
 	}).addTo(map);
 	let pnt = L.marker([43.7830, -79.1874]).addTo(map);
+	pnt.bindPopup(
+		"This is UTSC"
+	)
 	L.circleMarker(
   		[43.6629, -79.3957], 
   		{radius: 50, color: "black", fillColor: "red"}
