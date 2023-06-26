@@ -39,7 +39,7 @@
 	}).addTo(map);
 
 	// add data
-	let ggrc30= L.layerGroup();
+	let ggrc30 = L.layerGroup();
 	fetch("data/ggrc30_stations.geojson")
     				.then(function(response) {
         			return response.json();
@@ -55,8 +55,8 @@
     				.then(function(data) {
         			L.geoJSON(data).addTo(ggrc30);
     			});
-	ggrc30.addTo(Map);
-	let ggrc32= L.layerGroup();
+	ggrc30.addTo(map);
+	let ggrc32 = L.layerGroup();
 	fetch("data/ggrc32_stations.geojson")
     				.then(function(response) {
         			return response.json();
