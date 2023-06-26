@@ -40,12 +40,33 @@
 
 	// add data
 	let ggrc30 = L.layerGroup();
+	function states_color(p) {
+		if(p == 1) return "#E41A1C";
+    		if(p == 2) return "#377EB8";
+		if(p == 3) return "#4DAF4A";
+		if(p == 4) return "#984EA3";
+		if(p == 5) return "#FF7F00";
+		if(p == 6) return "#FFFF33";
+		if(p == 7) return "#A65628";
+	}
+	function cluster_style(feature) {
+		return {
+			fillColor: states_color(feature.properties.cluster)
+		}
+	}
 	fetch("data/ggrc30_stations.geojson")
     				.then(function(response) {
         			return response.json();
     			})
     				.then(function(data) {
-        			L.geoJSON(data).addTo(ggrc30);
+        			L.geoJSON(data, {
+					pointToLayer: function(geojson_point, latlng) {
+						return L.circleMarker(latlng);
+					}
+					style: {
+						style: states_style
+					}
+				}).addTo(ggrc30);
     			});
 
 	fetch("data/ggrc30_convex_hull.geojson")
