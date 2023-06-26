@@ -72,8 +72,10 @@
     		});
 	    
 	// add layer control
-	let layerControl = L.control.layers(ggrc30_stations, ggrc30_convex_hull).addTo(map);
-	layerControl.addOverlay(ggrc30_stations, "Station Clusters");
+	let overlay = {
+		"Station Clusters": ggrc30_stations
+	}
+	let layerControl = L.control.layers(null, overlay).addTo(map);
 	layerControl.addOverlay(ggrc30_convex_hull, "Station Cluster Convex Hulls");
 	layerControl.addOverlay(ggrc32_stations, "Average Travelling Speed Originating at Stations");
 	layerControl.addOverlay(ggrc32_routes, "Simulated Cycling Routes");
