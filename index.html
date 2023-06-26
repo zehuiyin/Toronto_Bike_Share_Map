@@ -72,6 +72,7 @@
     		});
 	    
 	// add layer control
+	let layerControl = L.control.layers(ggrc30_stations, ggrc30_convex_hull).addTo(map);
 	layerControl.addOverlay(ggrc30_stations, "Station Clusters");
 	layerControl.addOverlay(ggrc30_convex_hull, "Station Cluster Convex Hulls");
 	layerControl.addOverlay(ggrc32_stations, "Average Travelling Speed Originating at Stations");
