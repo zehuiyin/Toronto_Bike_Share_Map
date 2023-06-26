@@ -44,7 +44,7 @@
         		return response.json();
     		})
     		.then(function(data) {
-        		L.geoJSON(data).addTo(map);
+        		L.geoJSON(data);
     		});
 
 	let ggrc30_convex_hull = fetch("data/ggrc30_convex_hull.geojson")
@@ -52,7 +52,7 @@
         		return response.json();
     		})
     		.then(function(data) {
-        		L.geoJSON(data).addTo(map);
+        		L.geoJSON(data);
     		});
 
 	let ggrc32_stations = fetch("data/ggrc32_stations.geojson")
@@ -60,7 +60,7 @@
         		return response.json();
     		})
     		.then(function(data) {
-        		L.geoJSON(data).addTo(map);
+        		L.geoJSON(data);
     		});
 
 	let ggrc32_routes =fetch("data/ggrc32_routes.geojson")
@@ -68,7 +68,7 @@
         		return response.json();
     		})
     		.then(function(data) {
-        		L.geoJSON(data).addTo(map);
+        		L.geoJSON(data);
     		});
 	    
 	// add layer control
