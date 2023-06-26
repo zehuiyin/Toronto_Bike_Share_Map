@@ -39,39 +39,39 @@
 	}).addTo(map);
 
 	// add data
-	let ggrc30_stations = fetch("data/ggrc30_stations.geojson")
+	let ggrc30= L.layerGroup();
+	fetch("data/ggrc30_stations.geojson")
     				.then(function(response) {
         			return response.json();
     			})
     				.then(function(data) {
-        			L.geoJSON(data);
+        			L.geoJSON(data).addTo(ggrc30);
+    			});
+
+	fetch("data/ggrc30_convex_hull.geojson")
+    				.then(function(response) {
+        			return response.json();
+    			})
+    				.then(function(data) {
+        			L.geoJSON(data).addTo(ggrc30);
+    			});
+
+	let ggrc32= L.layerGroup();
+	fetch("data/ggrc32_stations.geojson")
+    				.then(function(response) {
+        			return response.json();
+    			})
+    				.then(function(data) {
+        			L.geoJSON(data).addTo(ggrc32);
     			});
 	    
-	let ggrc30_convex_hull = fetch("data/ggrc30_convex_hull.geojson")
+	fetch("data/ggrc32_routes.geojson")
     				.then(function(response) {
         			return response.json();
     			})
     				.then(function(data) {
-        			L.geoJSON(data);
+        			L.geoJSON(data).addTo(ggrc32);
     			});
-	    
-	let ggrc32_stations = fetch("data/ggrc32_stations.geojson")
-    				.then(function(response) {
-        			return response.json();
-    			})
-    				.then(function(data) {
-        			L.geoJSON(data);
-    			});
-	    
-	let ggrc32_routes = fetch("data/ggrc32_routes.geojson")
-    				.then(function(response) {
-        			return response.json();
-    			})
-    				.then(function(data) {
-        			L.geoJSON(data);
-    			});
-	let ggrc30 = L.layerGroup([ggrc30_stations, ggrc30_convex_hull]);
-	let ggrc32 = L.layerGroup([ggrc32_stations, ggrc32_routes]);
 	    
 	// add layer control
 	let overlay = {
