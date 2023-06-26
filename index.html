@@ -38,7 +38,32 @@
 		subdomains: 'abcd',
 	}).addTo(map);
 
+	// add data
 	fetch("data/ggrc30_stations.geojson")
+    		.then(function(response) {
+        		return response.json();
+    		})
+    		.then(function(data) {
+        		L.geoJSON(data).addTo(map);
+    		});
+
+	fetch("data/ggrc30_convex_hull.geojson")
+    		.then(function(response) {
+        		return response.json();
+    		})
+    		.then(function(data) {
+        		L.geoJSON(data).addTo(map);
+    		});
+
+	fetch("data/ggrc32_stations.geojson")
+    		.then(function(response) {
+        		return response.json();
+    		})
+    		.then(function(data) {
+        		L.geoJSON(data).addTo(map);
+    		});
+
+	fetch("data/ggrc32_routes.geojson")
     		.then(function(response) {
         		return response.json();
     		})
