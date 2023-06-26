@@ -64,10 +64,8 @@ let map = L.map('map', {center: [14, -87], zoom: 3, layers: [osm, pnt, line]});
 let ggrc30_stations = fetch("data/ggrc30_stations.geojson")
     		.then(function(response) {
         		return response.json();
-    		})
-    		.then(function(data) {
-        		L.geoJSON(data);
     		});
+ggrc30_stations = L.geoJSON(ggrc30_stations)
 
 // Description
 let legend = L.control({position: "bottomleft"});
