@@ -61,6 +61,14 @@ let line = L.polyline(coords, {color: "red", weight: 7}).bindPopup("Travel Path"
 // Map
 let map = L.map('map', {center: [14, -87], zoom: 3, layers: [osm, pnt, line]});
 
+let ggrc30_stations = fetch("data/ggrc30_stations.geojson")
+    		.then(function(response) {
+        		return response.json();
+    		})
+    		.then(function(data) {
+        		L.geoJSON(data);
+    		});
+
 // Description
 let legend = L.control({position: "bottomleft"});
 legend.onAdd = function() {
@@ -84,7 +92,8 @@ let baseMaps = {
 };
 let overlayMaps = {
     "Sites": pnt,
-    "Travel Path": line
+    "Travel Path": line,
+    "Stations": ggrc30_stations
 };
 L.control.layers(baseMaps, overlayMaps, {position: "topleft", collapsed: false}).addTo(map);
 
