@@ -39,19 +39,46 @@
 	}).addTo(map);
 
 	// add data
-	let ggrc30_stations = L.geoJson.ajax("data/ggrc30_stations.geojson");
-	let ggrc30_convex_hull = L.geoJson.ajax("data/ggrc30_convex_hull.geojson");
-	let ggrc32_stations = L.geoJson.ajax("data/ggrc32_stations.geojson");
-	let ggrc32_routes = L.geoJson.ajax("data/ggrc32_routes.geojson");
-	
+	let ggrc30_stations = fetch("data/ggrc30_stations.geojson")
+    				.then(function(response) {
+        			return response.json();
+    			})
+    				.then(function(data) {
+        			L.geoJSON(data).addTo(map);
+    			});
+	    
+	let ggrc30_convex_hull = fetch("data/ggrc30_convex_hull.geojson")
+    				.then(function(response) {
+        			return response.json();
+    			})
+    				.then(function(data) {
+        			L.geoJSON(data).addTo(map);
+    			});
+	    
+	let ggrc32_stations = fetch("data/ggrc32_stations.geojson")
+    				.then(function(response) {
+        			return response.json();
+    			})
+    				.then(function(data) {
+        			L.geoJSON(data).addTo(map);
+    			});
+	    
+	let ggrc32_routes = fetch("data/ggrc32_routes.geojson")
+    				.then(function(response) {
+        			return response.json();
+    			})
+    				.then(function(data) {
+        			L.geoJSON(data).addTo(map);
+    			});
+	let ggrc30 = L.layerGroup([ggrc30_stations, ggrc30_convex_hull]);
+	let ggrc32 = L.layerGroup([ggrc32_stations, ggrc32_routes]);
+	    
 	// add layer control
 	let overlay = {
-		"Station Clusters": ggrc30_stations
+		"Station Clusters": ggrc30
 	}
 	let layerControl = L.control.layers(null, overlay, {position: "topleft", collapsed: false}).addTo(map);
-	layerControl.addOverlay(ggrc30_convex_hull, "Station Cluster Convex Hulls");
-	layerControl.addOverlay(ggrc32_stations, "Average Travelling Speed Originating at Stations");
-	layerControl.addOverlay(ggrc32_routes, "Simulated Cycling Routes");
+	layerControl.addOverlay(ggrc32, "Cycling Routes and Speeds");
 	
 	let description = L.control({position: "bottomleft"});
 	description.onAdd = function() {
