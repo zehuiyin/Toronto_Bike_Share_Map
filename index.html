@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic information box</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <script src="js/leaflet.js"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+        html, body, #map {
+            height: 100%;
+            width: 100%;
+        }
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+            width: 10em;
+        }
+        .info h4 {
+            margin: 0 0 5px;
+            color: #777777;
+        }
+        .info #current_feature {
+            margin: 6px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+    
+let map = L.map("map").setView([32, 35], 10);
+
+L.tileLayer("https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_nolabels/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attribution/">CartoDB</a>',
+    subdomains: "abcd",
+    maxZoom: 19
+}).addTo(map);
+
+// Information box
+let info = L.control({position: "topright"});
+info.onAdd = function() {
+    let div = L.DomUtil.create("div", "info");
+    div.innerHTML = '<h4>Statistical areas</h4><p id="current_feature"></p>';
+    return div;
+};
+info.addTo(map);
+
+let geojson;
+
+function stat_color(d) {
+    if(d > 14965) return "#b30000";
+    if(d > 7754) return "#e34a33";
+    if(d > 2287) return "#fc8d59";
+    if(d > 865) return "#fdcc8a"; 
+    return "#fef0d9";
+}
+
+function stat_style(feature) {
+    return {
+        fillColor: stat_color(feature.properties.density),
+        weight: 0.5,
+        opacity: 1,
+        color: "black",
+        fillOpacity: 0.7
+    };
+}
+
+let highlightStyle = {
+    weight: 5,
+    color: "yellow",
+    fillOpacity: 0.5
+};
+
+let info_p = document.getElementById("current_feature");
+
+function highlight_feature(e) {
+    e.target.setStyle(highlightStyle);
+    e.target.bringToFront();
+    info_p.innerHTML =
+        e.target.feature.properties.YISHUV_STAT11 + "<br>" + 
+        e.target.feature.properties.SHEM_YISHUV_ENGLISH + "<br>" + 
+        Math.round(e.target.feature.properties.density) + ' km<sup>-2</sup>';
+}
+
+function reset_highlight(e) {
+    geojson.resetStyle(e.target);
+    info_p.innerHTML = "";
+}
+
+fetch("data/stat.geojson")
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        geojson = L.geoJSON(data, {
+            style: stat_style,
+            onEachFeature: function(feature, layer) {
+                layer.addEventListener("mouseover", highlight_feature);
+                layer.addEventListener("mouseout", reset_highlight);
+            }
+        }).addTo(map);
+            
+    });
+
+    </script>
+</body>
+</html>
