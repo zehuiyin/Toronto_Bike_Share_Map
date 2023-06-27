@@ -69,7 +69,6 @@
 	//		}).addTo(map);
 
 	// add data
-	let ggrc30_stations = L.geoJSON();
 	function states_color(p) {
 		if(p == 1) return "#E41A1C";
     	if(p == 2) return "#377EB8";
@@ -95,7 +94,7 @@
 		return response.json();
 	})
 		.then(function(data) {
-		L.geoJSON(data, {
+		ggrc30_stations = L.geoJSON(data, {
 		pointToLayer: function(geojson_point, latlng) {
 			return L.circleMarker(latlng, cluster_style(geojson_point));
 		},
@@ -108,10 +107,9 @@
 					'</div>'
 			);
 		}
-		}).addTo(ggrc30_stations)
+		})
 	});
 
-	let ggrc30_convex_hull = L.geoJSON();
 	function states_color1(p) {
 		if(p.properties.cluster == 1) return {
 			fillColor: "#FFBEBE",
@@ -169,7 +167,7 @@
         			return response.json();
     			})
     				.then(function(data) {
-        			L.geoJSON(data, {style: states_color1}).addTo(ggrc30_convex_hull);
+        			ggrc30_convex_hull = L.geoJSON(data, {style: states_color1});
     			});
 
 	// Initial version without basemap selection
@@ -195,13 +193,12 @@
 		}
 	}
 
-	let ggrc32_stations = L.geoJSON();
 	fetch("data/ggrc32_stations.geojson")
 		.then(function(response) {
 		return response.json();
 	})
 		.then(function(data) {
-		L.geoJSON(data, {
+		ggrc32_stations = L.geoJSON(data, {
 		pointToLayer: function(geojson_point, latlng) {
 			return L.circleMarker(latlng, cluster_style2(geojson_point));
 		},
@@ -214,7 +211,7 @@
 					'</div>'
 			);
 		}
-		}).addTo(ggrc32_stations);
+		})
 	});
 	
 	function states_color3(p) {
@@ -250,13 +247,12 @@
 			};
 	}
 	
-	let ggrc32_routes = L.geoJSON();
 	fetch("data/ggrc32_routes.geojson")
     				.then(function(response) {
         			return response.json();
     			})
     				.then(function(data) {
-        			L.geoJSON(data, {style: states_color3,
+        			ggrc32_routes = L.geoJSON(data, {style: states_color3,
 						onEachFeature: function(feature, layer) {
 							layer.bindPopup(
 								'<div class="popup">' + 
@@ -264,7 +260,7 @@
 									'</div>'
 							);
 						}
-					}).addTo(ggrc32_routes);
+					})
     			});
 
 	let map = L.map('map', {center: [43.688563, -79.308769], zoom: 12, layers: [dark, ggrc30_stations, ggrc30_convex_hull]});
